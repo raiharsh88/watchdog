@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const mongoose = require("mongoose");
+const { imageModel } = require("../schema/image");
 
 router.get("/test", async (req, res) => {
   res.send("Server online");
