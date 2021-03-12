@@ -22,12 +22,12 @@ align-items:center; */
 
 `
 const Canvas = styled.div`
-background-color:rgb(214 , 59, 59);
+background-color:#3b9ba1;
 flex:0.65;
 border:none;
 box-sizing:border-box;
 padding:40px;
-background-image:url(${url + '/images/login-page-bg.png'});
+background-image:url(${url + '/images/login-bg.png'});
 /* background-size:cover; */
 background-repeat:no-repeat;
 /* background-position:center; */
@@ -79,24 +79,36 @@ align-items:center;
 /* background-color:rgba(20 ,20 ,20 , 0.5); */
 
 h1{
-    font-family:'Roboto' , sans-serif;
-    color:white;
-    font-size:16px ;
-    font-weight:400;
+    font-family:'Raleway';
+    color:#181616;
+    font-size:20px ;
+    font-weight:500;
+    padding:1px 0px 1px 5px;
     letter-spacing:8px;
     margin:0;
     margin-left:16px;
     text-transform:uppercase;
 
-
+    background-color:rgba(80,80,80,0.3);
 
 
 }
 
 img{
-    max-width:28px;
+    max-width:90px;
     max-height:auto;
     object-fit:contain;
+
+
+      /* filter: saturate(3);
+ filter: grayscale(100%);
+filter: contrast(160%);
+filter: brightness(0.25);
+ filter: blur(3px);
+ filter: invert(100%);
+filter: sepia(100%);
+ filter: hue-rotate(300deg);
+ filter: opacity(50%); */
 }
 
 `
@@ -241,7 +253,7 @@ const Quote = styled.h1`
     font-size:70px;
     font-family:'Roboto';
     font-weight:500;
-    color:white;
+    color:#181616;
     letter-spacing:10px;
    
     word-wrap: break-word;

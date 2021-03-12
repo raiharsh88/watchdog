@@ -1,4 +1,4 @@
-const url = "https://nebulaliving.com/api/v1";
+const url = "http://localhost:5000";
 export { url };
 
 const Test1 = function (props) {

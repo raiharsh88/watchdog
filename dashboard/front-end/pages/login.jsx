@@ -38,8 +38,7 @@ const HeadTag = function (props) {
             />
             <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet" />
 
-
-        </Head>
+            <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400;500&display=swap" rel="stylesheet" />        </Head>
     )
 }
 
@@ -47,10 +46,10 @@ let i = 0;
 
 const LoginPage = function (props) {
 
-    const [creds, setCreds] = useState({ email: 'raiharsh2240@gmail.com', password: 'Passcode@7977' });
+    const [creds, setCreds] = useState({ email: 'raiharsh2240@gmail.com', password: '' });
     const [error, setError] = useState('')
     const router = useRouter();
-    let text = 'Redefining the living  ';
+    let text = 'I can see with closed eyes  ';
 
     var [content, setContent] = useState('');
 
@@ -174,8 +173,8 @@ const LoginPage = function (props) {
                 </LoginTab>
                 <Canvas>
                     <Logo>
-                        <img src="/meta/title-3x.png" alt="logo" />
-                        <h1>Nebula Living</h1>
+                        <img src={`${url}/meta/icon.png`} alt="logo" />
+                        <h1>Watch Dog</h1>
 
                     </Logo>
 
@@ -205,7 +204,7 @@ const TypeWriter = function (props) {
 
 // export async function getServerSideProps() {
 
-//     const res = await fetch(`${url}/auth/checkAuth`, { credentials: 'include' })
+//     const res = await fetch(`${url}/auth/checkAuth`, {credentials: 'include' })
 //         .then(res => res.status)
 //         .catch(err => console.log(err));
 //     console.log('res status is ', res);
@@ -221,7 +220,7 @@ const TypeWriter = function (props) {
 //         }
 //     } else {
 //         return {
-//             props: {}, // will be passed to the page component as props
+//             props: { }, // will be passed to the page component as props
 //         }
 //     }
 // }
