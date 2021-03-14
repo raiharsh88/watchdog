@@ -45,7 +45,7 @@ transition:color 0.1s linear;
 
 i{
     font-size:28px;
-    color:white;
+    color:${props => props.selected ? 'rgb(4, 159, 224)' : 'white'};;
     margin-right:20px;
 
 }
@@ -55,7 +55,7 @@ i{
 h1{
     font-family:sans-serif;
     font-weight:800;
-    color:white;
+    color:${props => props.selected ? 'rgb(4, 159, 224)' : 'white'};
     font-size:20px;
     margin:0;
 

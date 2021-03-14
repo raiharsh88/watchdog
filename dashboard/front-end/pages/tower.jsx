@@ -10,7 +10,7 @@ import { url } from '../config';
 import Info from '../components/order-info/infoTab';
 import Shipping from '../components/order-info/shipping';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Feed from '../components/tower/feed'
 
 const HeadTag = function (props) {
 
@@ -46,7 +46,7 @@ const HeadTag = function (props) {
 export default function OrderInfo(props) {
     const router = useRouter();
 
-
+    const [option, setOption] = useState('home')
     const [data, setData] = useState(null);
 
     useEffect(async () => {
@@ -65,14 +65,18 @@ export default function OrderInfo(props) {
             <HeadTag />
 
 
-            <div className="container">
+            <div className="container-fluid">
 
-                <div className="row">
-                    <div className="col col-2 p-0">
-                        <Navbar />
+                <div className="row h-100 pr-5 pl-5" style={{ height: '100%' }}>
+                    <div className="col col-2">
+                        <Navbar option={option} setOption={setOption} />
                     </div>
-                    <div className="col col-6"></div>
-                    <div className="col col-3">
+                    <div className="col col-7 pl-5">
+
+                        <Feed option={option} />
+
+                    </div>
+                    <div className="col col-2">
 
                     </div>
                 </div>
