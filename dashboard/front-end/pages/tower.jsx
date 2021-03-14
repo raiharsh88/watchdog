@@ -63,35 +63,20 @@ export default function OrderInfo(props) {
         <main style={{ minHeight: '100vh', maxHeight: "100vh", backgroundColor: 'rgb(0,0,0)' }}>
 
             <HeadTag />
-            <Navbar />
 
 
-            <div className="container-fluid">
-                <Container>
+            <div className="container">
 
-                    <div className="row">
-                        <div className="col col-4">
-
-
-                        </div>
-                        <div className="col col-4">
-
-
-
-                        </div>
-                        <div className="col col-4">
-
-
-                        </div>
+                <div className="row">
+                    <div className="col col-2 p-0">
+                        <Navbar />
                     </div>
+                    <div className="col col-6"></div>
+                    <div className="col col-3">
 
-
-                    <div className="row">
-                        <div className="col-4">
-
-                        </div>
                     </div>
-                </Container>
+                </div>
+
 
             </div>
 
