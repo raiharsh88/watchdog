@@ -6,8 +6,10 @@ const port = process.env.port || 5000;
 const path_to_static = path.join(__dirname, "../", "public");
 //Routers
 const uploadRouter = require("./routes/uploads");
-app.use("/upload", uploadRouter);
 app.use(express.static(path_to_static));
+
+app.use("/upload", uploadRouter);
+
 
 app.get("/test", async (req, res) => {
   res.json("Serve is online");

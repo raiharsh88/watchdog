@@ -129,12 +129,12 @@ const NavBar = function (props) {
     return (
 
         <React.Fragment>
-            <Navbar style={{ boxShadow: '0px 3px 5px -5px rgba(0,0,0,0.75)', backgroundColor: 'rgb(240,240,245)', opacity: 10, position: "sticky", top: 0, zIndex: 200, paddingTop: '5px', paddingBottom: '5px', }} expand="lg" >
+            <Navbar style={{ boxShadow: '0px 3px 5px -5px rgba(0,0,0,0.75)', backgroundColor: 'transparent', opacity: 10, position: "sticky", top: 0, zIndex: 200, paddingTop: '5px', paddingBottom: '5px', }} expand="lg" >
                 <Navbar.Brand href="#home">
                     <Link href="/">
                         <Logo  >
 
-                            <img src='/meta/logo-living-1x.png' alt="Nebula Living" />
+                            <img src={url + '/meta/icon2.png'} alt="Nebula Living" />
                             {/* <p>nebula living</p> */}
                         </Logo>
                     </Link>

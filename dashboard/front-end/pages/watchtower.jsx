@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { url } from '../config';
 import Info from '../components/order-info/infoTab';
 import Shipping from '../components/order-info/shipping';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const HeadTag = function (props) {
@@ -52,47 +53,14 @@ export default function OrderInfo(props) {
 
 
 
-        if (!router.query.rec) return;
-
-        const req = await fetch(`${url}/admin/order-info?rec=${router.query.rec}`, { credentials: 'include' });
-
-        if (req.status === 400) {
-
-            alert('Invalid URL');
-            return router.replace('/orders');
-
-        }
-        if (req.status === 400) {
-
-            alert('No orders found with this receipt id');
-            return router.replace('/orders');
-        }
-
-
-        if (req.status === 200) {
-            const res = await req.json();
-
-
-            setData(res.order);
-
-
-        }
-
-
-
-
-
-        // console.log(router.query, router.pathname);
-
-
     }, [router.query.rec])
 
 
-    if (!data) return <h1>Loading....</h1>
+    // if (!data) return <h1>Loading....</h1>
 
     return (
 
-        <main style={{ minHeight: '100vh', backgroundColor: 'rgb(247,247,253)' }}>
+        <main style={{ minHeight: '100vh', maxHeight: "100vh", backgroundColor: 'rgb(0,0,0)' }}>
 
             <HeadTag />
             <Navbar />
@@ -104,17 +72,14 @@ export default function OrderInfo(props) {
                     <div className="row">
                         <div className="col col-4">
 
-                            <Info type="personal" data={data} />
 
                         </div>
                         <div className="col col-4">
 
-                            <Info type="order" data={data} />
 
 
                         </div>
                         <div className="col col-4">
-                            <Info type="payment" data={data} />
 
 
                         </div>
@@ -124,7 +89,6 @@ export default function OrderInfo(props) {
                     <div className="row">
                         <div className="col-4">
 
-                            <Shipping />
                         </div>
                     </div>
                 </Container>
