@@ -7,10 +7,8 @@ import { Container } from '../styled/order-info/mainStyled'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { url } from '../config';
-import Info from '../components/order-info/infoTab';
-import Shipping from '../components/order-info/shipping';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Feed from '../components/tower/feed'
+import InfoTab from '../components/tower/infoTab';
 
 const HeadTag = function (props) {
 
@@ -19,12 +17,12 @@ const HeadTag = function (props) {
         <Head>
 
 
-            <title>Admin - Nebula Living</title>
+            <title>Tower - Watchdog</title>
 
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-            <link rel="shortcut icon" href="/meta/title.png" type="image/png" />
+            <link rel="shortcut icon" href={url + '/meta/watchdog.png'} type="image/png" />
             {/* <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" /> */}
 
             <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -76,7 +74,10 @@ export default function OrderInfo(props) {
                         <Feed option={option} />
 
                     </div>
-                    <div className="col col-2">
+                    <div className="col col-3">
+
+                        <InfoTab />
+
 
                     </div>
                 </div>

@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const imageSchema = new Schema({
-  time: Number,
-  name: String,
-  meta: { Object },
-});
+const imageSchema = new Schema(
+  {
+    time: Number,
+    camId: String,
+    imgId: String,
+    meta: { Object },
+  },
+  { strict: false }
+);
 
-const imageModel = mongoose.model("images", imageSchema);
+const Image = mongoose.model("images", imageSchema);
 
-module.exports = { imageModel };
+module.exports = { Image };

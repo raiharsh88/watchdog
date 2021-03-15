@@ -12,7 +12,8 @@ overflow-y:scroll;
 border:0.1px solid rgb(47, 51, 54);
 border-top:none;
 position:relative;
-
+padding:0;
+/* padding:0px 32px 0px 32px; */
 `
 
 const Head = styled.div`
@@ -37,12 +38,78 @@ span{
 
 `
 
-const CardBox = styled.div`
+const ImageCard = styled.div`
 
-height:500px;
+/* height:500px;
 width:100%;
-border:1px solid white;
+border:1px solid white; */
+width:100%;
+/* height:400px; */
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+align-items:center;
+overflow-x:hidden;
+border-radius:7px;
+padding:10px 32px 20px 32px;
+margin:20px 0px 20px 0px;
+transition: background-color 0.1s linear;
+img{
+    max-width:100%;
+    height:auto;
+    object-fit:contain;
+    border-radius:7px;
+}
+
+
+&:hover{
+    cursor:pointer;
+    background-color:rgb(10,10,10);
+
+    /* box-shadow: 0px 0px 12px -4px rgba(46,213,255,1); */
+}
+
+
+`
+
+const CardHead = styled.div`
+
+padding:10px 0px 10px 0px;
+align-self:flex-start;
+
+
+i{
+
+}
+
+span{
+    font-size:14px;
+    font-weight:400;
+    font-family:'Dosis';
+    color:white;
+    
+
+
+}
+
+`
+
+const InfoDiv = styled.div`
+
+display:flex;
+flex-direction:row;
+justify:flex-start;
+align-items:center;
+
+
+`
+const CardFoot = styled.div`
+
+
+
 `
 
 
-export { Column, Head, CardBox }
+
+
+export { Column, Head, ImageCard, CardHead }
