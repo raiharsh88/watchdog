@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { url } from '../../config'
+import InfoTab from '../../components/tower/infoTab';
 
-import { Column, Head, ImageCard, CardHead } from '../../styled/tower/feedStyled';
+import { Column, Head, ImageCard, CardHead, InfoDiv } from '../../styled/tower/feedStyled';
 import Loader from '../../components/loader';
 const Feed = function (props) {
 
@@ -11,7 +12,7 @@ const Feed = function (props) {
     })
 
     const [data, setData] = useState(null);
-
+    const [infoTab, setInfoTab] = useState(null);
 
     useEffect(async () => {
 
@@ -23,7 +24,6 @@ const Feed = function (props) {
         let data = await req.json();
 
 
-        console.log('Data is', data);
 
 
         setData(data);
@@ -34,10 +34,26 @@ const Feed = function (props) {
     }, [])
 
 
-    // useEffect(() => {
+    async function imageDetails(imgId) {
 
-    //     console.log('meta head', meta)
-    // }, [meta.head])
+
+
+        if (infoTab) {
+            if (infoTab.imgId == imgId) return;
+
+        }
+        setInfoTab(null);
+        const req = await fetch(`${url}/api/image-details?imgId=${imgId}`, { credentials: 'include' });
+        if (req.status === 404) return setInfoTab({ err: 'Image not found!' });
+        if (req.status !== 200) return alert('Unable to load image details')
+        const res = await req.json();
+
+
+        setTimeout(() => setInfoTab(res), 1000);
+
+
+
+    }
 
     if (!data) {
 
@@ -52,13 +68,32 @@ const Feed = function (props) {
 
 
     return (
-        <Column>
 
-            <Head>
-                <span>{meta.head}</span>
-            </Head>
-            {data.data.map(image => <Card data={image} key={image.imgId} />)}
-        </Column>
+        <div className="row">
+            <div className="col-8 col">
+
+                <Column>
+
+                    <Head>
+                        <span>{meta.head}</span>
+                    </Head>
+                    {data.data.map(image => <Card data={image}
+                        key={image.imgId} imageDetails={imageDetails} />)}
+                </Column>
+
+            </div>
+
+            <div className="col col-4">
+
+
+                {!infoTab ? <Loader /> : <InfoTab data={infoTab} />}
+
+
+
+
+
+            </div>
+        </div>
     )
 }
 
@@ -77,7 +112,6 @@ const Card = function (props) {
 
         setImage(props.data);
 
-        console.log('Image is ', props.data)
 
 
     }, [])
@@ -88,20 +122,32 @@ const Card = function (props) {
     return (
 
 
-        <React.Fragment>
 
-            <ImageCard>
-                <CardHead>
+        <ImageCard onClick={() => props.imageDetails(image.imgId)}>
+            <CardHead>
+
+                <InfoDiv>
+                    <i className="fad fa-camera"></i>
                     <span>
-                        {image.camId}
+                        {image.camId.toUpperCase()}
                     </span>
+                    {/* <span>
+                        {new Date(image.time).toLocaleTimeString('en-us', { timeZone: 'Asia/Kolkata' }) + '    ' + new Date(image.time).toDateString('en-us', { timeZone: 'Asia/Kolkata' })}
+                    </span> */}
+
+                </InfoDiv>
+
+                <InfoDiv>
+                    <i className="far fa-clock"></i>
                     <span>
                         {new Date(image.time).toLocaleTimeString('en-us', { timeZone: 'Asia/Kolkata' }) + '    ' + new Date(image.time).toDateString('en-us', { timeZone: 'Asia/Kolkata' })}
                     </span>
-                </CardHead>
-                <img src={image.url} alt="" />
-            </ImageCard>
-        </React.Fragment>
+
+                </InfoDiv>
+
+            </CardHead>
+            <img src={image.url} alt="" />
+        </ImageCard>
     )
 }
 export default Feed;

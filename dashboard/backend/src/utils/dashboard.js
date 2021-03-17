@@ -1,4 +1,5 @@
 const { Image } = require("../schema/image");
+const { Cam } = require("../schema/cam");
 
 const router = require("express").Router();
 
@@ -32,8 +33,29 @@ router.get("/sample", async (req, res) => {
   res.json({ data: doc });
 });
 
+// async function addProp() {
+//   const images = await Image.find();
+
+//   for (let img of images) {
+//     console.log(img);
+//   }
+// }
+
+// addProp();
 // CreateSample();
 
 // console.log(Date().toString());
+
+router.get("/image-details", async (req, res) => {
+  const { imgId } = req.query;
+
+  const image = await Image.findOne({ imgId });
+
+  // console.log(req.session);
+
+  if (!image) return res.status(404).json({ err: "Image not found!" });
+
+  res.json(image);
+});
 
 module.exports = router;

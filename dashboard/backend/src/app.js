@@ -1,9 +1,15 @@
 const express = require("express");
 const path = require("path");
+
 var bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const mongoStore = require("connect-mongo")(session);
+const passport = require("passport");
+
+// require("./config/passport").initialize(passport);
 
 const app = express();
-const mongoose = require("mongoose");
 
 const { mongoURI } = require("../../config");
 
@@ -13,6 +19,8 @@ const path_to_static = path.join(__dirname, "../", "public");
 //Routers
 const uploadRouter = require("./routes/uploads");
 const apiRouter = require("./utils/dashboard");
+const registerRouter = require("./routes/register");
+const authRouter = require("./routes/auth");
 
 const origins = [
   "http://172.105.63.46:5000",
@@ -40,18 +48,48 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-app.use(express.static(path_to_static));
-app.use("/upload", uploadRouter);
-
-app.use("/api", apiRouter);
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Conected to database");
   });
+
+const connection = mongoose.connection;
+
+require("./config/passport").initialize(passport);
+
+const sessionStorage = new mongoStore({
+  mongooseConnection: connection,
+  collection: "sessions",
+});
+
+const sessionConf = {
+  saveUninitialized: false,
+  resave: true,
+  secret: "dbjvspcthdyfvjwiAir7hbdvcwl0wbey",
+  store: sessionStorage,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    sameSite: true,
+    secure: false,
+    httpOnly: true,
+  },
+};
+
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(session(sessionConf));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(path_to_static));
+
+app.use("/auth", authRouter);
+
+app.use("/upload", uploadRouter);
+app.use("/register", registerRouter);
+app.use("/api", apiRouter);
 
 app.get("/test", async (req, res) => {
   res.json("Serve is online");

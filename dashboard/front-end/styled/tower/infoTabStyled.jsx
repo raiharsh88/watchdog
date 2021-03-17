@@ -88,6 +88,10 @@ font-weight:200;
 
 const Head = styled.div`
 
+margin-top:25px;
+margin-bottom:25px;
+
+
 `
 
 
@@ -111,8 +115,8 @@ border-radius:26px;
 span{
     font-family:sans-serif;
     font-weight:400;
-    color:white;
-    font-size:16px;
+    color:#049fe0;
+    font-size:14px;
     text-align:center;
 
 }
@@ -127,9 +131,81 @@ span{
 }
 `
 
+
+const InfoDiv = styled.div`
+
+display:flex;
+flex-direction:row;
+justify:flex-start;
+align-items:center;
+
+
+label{
+    font-size:14px;
+    font-weight:600;
+    font-family:'Noto Sans';
+    color:white;
+    text-transform:capitalize;
+    margin:0px 10px;
+}
+span{
+    font-size:14px;
+    font-weight:400;
+    font-family:'Noto Sans';
+    color:white;
+    
+
+    
+
+}
+
+i{
+    color:white;
+    font-size:17px;
+    margin-right:15px;
+}
+
+`
+
+
+const Download = styled.div`
+padding:7px 24px 7px 15px;
+
+width:100%;
+margin-top:30px;
+text-align:center;
+
+border:1px solid #049fe0;
+border-radius:26px;
+span{
+    font-family:sans-serif;
+    font-weight:400;
+    color:#049fe0;
+    font-size:14px;
+    text-align:center;
+
+}
+
+a{
+    width:100%;
+}
+&:hover{
+    /* background-color:#068ac2; */
+    cursor:pointer;
+    transition: background-color 0.1s linear;
+    
+}
+`
+
+
+
 export {
 
     Column,
+
     SearchBar,
-    Bigbutton
+    Head,
+    Bigbutton,
+    InfoDiv,
+    Download
 }

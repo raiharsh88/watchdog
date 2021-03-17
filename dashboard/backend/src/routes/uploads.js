@@ -1,7 +1,18 @@
 const router = require("express").Router();
 const { Image } = require("../schema/image");
-
+const { nanoid } = require("nanoid");
+const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadsDir);
+  },
+  filename: function (req, file, callback) {
+    console.log("file", file);
+    callback(null, Date.now() + "_" + file.originalname);
+  },
+});
 
 const uploadsDir = path.join(__dirname, "../../public/uploads");
 
@@ -17,33 +28,44 @@ router.get("/test", async (req, res) => {
 //   else throw 'error';
 // });
 
-const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadsDir);
-  },
-  filename: function (req, file, callback) {
-    console.log("file", file);
-    callback(null, Date.now() + "_" + file.originalname);
-  },
-});
-
 const upload = multer({ dest: uploadsDir, storage: storage });
 
-function updateDB(req) {
-  return new Promise(async (res, rej) => {
-    console.log("Body is", JSON.parse(JSON.stringify(req.body)));
+async function updateDB(req, res, next) {
+  if (!req.body) {
+    return rej("NO DATA FOUND WITH IMAGE");
+  }
 
-    if (!req.body) {
-      return rej("Error in promise");
-    }
-    if (!req.body) {
-      return res("Promise Successfull");
-    }
+  const data = JSON.parse(JSON.stringify(req.body));
+  const { camId } = data;
+  console.log("Data is", data);
+  const newImage = new Image({
+    time: Date.now(),
+    camId: data.camId,
+    imgId: camId + "_" + (await nanoid(10)),
+    url: "http://172.105.63.46:5000/uploads/" + req.file.filename,
+    meta: {
+      ...data,
+    },
   });
+
+  await newImage
+    .save()
+    .then((doc) => {
+      console.log("Image Saved", doc);
+
+      return res.json({
+        success: true,
+        url: "http://172.105.63.46:5000/uploads/" + req.file.filename,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({ err: "SERVER_INTERNAL_ERROR" });
+
+      console.log("Failed to save image", err);
+    });
 }
 
-router.post("/", upload.single("file"), (req, res) => {
+router.post("/", upload.single("file"), (req, res, next) => {
   if (!req.file) {
     console.log("No file received", req.body);
     return res.send({
@@ -52,19 +74,7 @@ router.post("/", upload.single("file"), (req, res) => {
   } else {
     console.log("file received");
 
-    updateDB(req)
-      .then((msg) => {
-        console.log(msg);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    return res.send({
-      success: true,
-
-      url: "http://172.105.63.46:5000/uploads/" + req.file.filename,
-    });
+    updateDB(req, res, next);
   }
 });
 

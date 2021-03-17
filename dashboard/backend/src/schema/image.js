@@ -5,6 +5,7 @@ const imageSchema = new Schema(
   {
     time: Number,
     camId: String,
+    url: String,
     imgId: String,
     meta: { Object },
   },

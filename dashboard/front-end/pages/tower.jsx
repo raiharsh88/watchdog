@@ -69,17 +69,12 @@ export default function OrderInfo(props) {
                     <div className="col col-2">
                         <Navbar option={option} setOption={setOption} />
                     </div>
-                    <div className="col col-7 pl-5">
+                    <div className="col col-10 pl-5">
 
                         <Feed option={option} />
 
                     </div>
-                    <div className="col col-3">
 
-                        <InfoTab />
-
-
-                    </div>
                 </div>
 
 

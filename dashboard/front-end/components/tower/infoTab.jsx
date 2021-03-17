@@ -1,53 +1,106 @@
 import React, { useState, useEffect } from 'react';
 
-import { Column, SearchBar, Bigbutton } from '../../styled/tower/infoTabStyled';
+import Loader from '../../components/loader';
+import { Column, SearchBar, Head, Bigbutton, InfoDiv, Download } from '../../styled/tower/infoTabStyled';
 import { url } from '../../config'
 
 
 const InfoTab = function (props) {
 
 
-    const InfoState = useState(null)
+    const [infoTab, setInfoTab] = useState(null)
+
     useEffect(async () => {
 
-        const req = await fetch(url + '/api/sample', { credentials: 'include' });
-
-        if (req.status !== 200) return alert('Something went wrong');
+        console.log(props.data);
 
 
-        let data = await req.json();
+        setInfoTab(props.data);
+
+        if (!props.data) return;
 
 
-        console.log('Data is', data);
+        let { imgId, camId, url } = props.data;
+
+        let pairs = {}
+
+
+        for (let [key, value] of Object.entries(props.data.meta)) {
+
+            // console.log(key, value)
+
+
+            pairs[key] = value;
+
+
+            // console.log('Float detected', value)
+            // pairs[key] = (parseFloat(value) * 100).toFixed(2);
 
 
 
 
-    })
+
+
+        }
+
+
+        delete pairs.camId;
+
+        setInfoTab({ imgId, camId, url, pairs: pairs })
+
+
+    }, [props.data])
+
+
+    if (!props.data) return <Loader />
+    if (!infoTab) return <Loader />
 
 
     return (
-
-        // <Column>
-
-        //     <SearchBar>
-
-        //     </SearchBar>
-
-
-        // </Column>
-
         <Column>
+
+
+
             <SearchBar>
                 <input type="text" placeholder="Search" />
                 <i className="far fa-search"></i>
             </SearchBar>
 
+
+            {Object.keys(infoTab.pairs).map((key) =>
+                <InfoDiv
+                    key={key}><label>{key}</label><span>{infoTab.pairs[key]}</span>
+                </InfoDiv>)}
+
             <Map />
 
-            <Bigbutton>
-                <span>Visit Cam</span>
-            </Bigbutton>
+
+            <div className="row">
+
+
+                <div className="col col-6">
+                    <a href={infoTab.url} download={infoTab.imgId}
+                        target="_blank"
+                        title={'watchdog'}>
+                        <Download>
+
+                            Save
+
+
+                    </Download>
+
+                    </a>
+                </div>
+
+
+                <div className="col col-6">
+                    <Bigbutton>
+                        <span>Visit Cam</span>
+                    </Bigbutton>
+                </div>
+            </div>
+
+
         </Column>
 
     )
