@@ -46,7 +46,7 @@ let i = 0;
 
 const LoginPage = function (props) {
 
-    const [creds, setCreds] = useState({ email: 'raiharsh2240@gmail.com', password: '' });
+    const [creds, setCreds] = useState({ email: '', password: '' });
     const [error, setError] = useState('')
     const router = useRouter();
     let text = 'I can see with closed eyes  ';
@@ -56,13 +56,13 @@ const LoginPage = function (props) {
     // const router = useRouter();
     useEffect(async () => {
 
-        // const res = await fetch(`${url}/auth/checkAuth`, { credentials: 'include' })
-        //     .then(data => data.status)
-        //     .catch(err => alert('Something went wrong'));
-        // console.log(res);
-        // if (res === 200) {
-        //     return router.push('/');
-        // }
+        const res = await fetch(`${url}/auth/checkAuth`, { credentials: 'include' })
+            .then(data => data.status)
+            .catch(err => alert('Something went wrong'));
+        console.log(res);
+        if (res === 200) {
+            return router.replace('/');
+        }
 
         text.split('').map((t, k) => setTimeout(() => {
 
@@ -86,8 +86,7 @@ const LoginPage = function (props) {
             .then(data => data.json())
             .catch(e => alert('Something went wrong '));
 
-        console.log(res);
-        return
+        // console.log(res);
         if (!res) {
             alert('something went wrong');
             router.reload();

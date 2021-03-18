@@ -8,8 +8,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { url } from '../config';
 import Feed from '../components/tower/feed'
+import Cameras from '../components/tower/cameras'
 import InfoTab from '../components/tower/infoTab';
-
+import AddCamera from '../components/tower/addCamera'
 const HeadTag = function (props) {
 
     return (
@@ -47,11 +48,46 @@ export default function OrderInfo(props) {
     const [option, setOption] = useState('home')
     const [data, setData] = useState(null);
 
+    // const [current , setCurrent] = useEffect('feed');
+
     useEffect(async () => {
 
+        const req = await fetch(url + '/auth/check-auth', { credentials: 'include' });
+
+        if (req.status === 403) {
+            return router.replace('/login');
+        }
 
 
-    }, [router.query.rec])
+
+
+    }, [])
+
+
+    // useEffect(() => {
+
+    //     console.log(router.query.tab)
+
+
+    //     let tab = router.query.tab;
+
+    //     let tabs = ['home', 'add_cam', 'network'];
+
+
+    //     if (tabs.indexOf(tab) === -1) {
+
+    //         router.replace({
+    //             pathname: '/',
+    //             query: { tab: 'home' },
+    //         })
+    //     }
+
+
+
+    // }, [router.pathname])
+
+
+
 
 
     // if (!data) return <h1>Loading....</h1>
@@ -70,8 +106,10 @@ export default function OrderInfo(props) {
                         <Navbar option={option} setOption={setOption} />
                     </div>
                     <div className="col col-10 pl-5">
-
-                        <Feed option={option} />
+                        {option === 'home' ? <Feed option={option} />
+                            : option === 'network' ? <Cameras option={option} />
+                                : option === 'add_camera' ? <AddCamera option={option} />
+                                    : <Feed option={option} />}
 
                     </div>
 

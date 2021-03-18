@@ -38,4 +38,11 @@ router.get("/logout", (req, res) => {
   res.status(301).json({ msg: "logged out" });
 });
 
+router.get("/check-auth", async (req, res) => {
+  if (!req.user) return res.status(403).json({ err: "UNAUTHORIZED" });
+
+  console.log("This user is authneticated");
+
+  res.status(200).json({ msg: "AUTHENTICATED" });
+});
 module.exports = router;

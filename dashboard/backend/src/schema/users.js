@@ -5,7 +5,6 @@ const user = {
   email: String,
   phone: String,
   password: String,
-  initiated: String,
   since: String,
 };
 

@@ -1,5 +1,7 @@
 const { Image } = require("../schema/image");
 const { Cam } = require("../schema/cam");
+const { User } = require("../schema/users");
+const bcrypt = require("bcrypt");
 
 const router = require("express").Router();
 
@@ -58,4 +60,79 @@ router.get("/image-details", async (req, res) => {
   res.json(image);
 });
 
+router.get("/list-cameras", async (req, res) => {
+  if (!req.user) return res.status(401).json({ err: "UNAUTHORIZED" });
+  const cams = await Cam.find({ email: req.user.email });
+
+  // for (let cam of cams) {
+  //   let newUpdate = await Cam.findOneAndUpdate(
+  //     { camId: cam.camId },
+  //     { lastSeen: Date.now() },
+  //     { new: true }
+  //   );
+
+  //   console.log(newUpdate);
+  // }
+
+  res.json({ data: cams });
+
+  // res.json({});
+});
+
+router.get("/add-camera", async (req, res) => {
+  if (!req.user) return res.status(401).json({ err: "UNAUTHORIZED" });
+
+  let oldCam = await Cam.findOne({ camId: req.query.camId });
+
+  // console.log("No old Cams", oldCam);
+
+  // return res.status(200).json({ msg: "Camera already added" });
+
+  if (oldCam) return res.status(409).json({ err: "Camera already added" });
+  const newCam = new Cam({
+    camId: req.query.camId,
+    time: Date.now(),
+    lastSeen: Date.now(),
+    email: req.user.email,
+    meta: {
+      location: {
+        lat: "19° 12' 24.408'' N",
+        lon: "72° 54' 18.0756'' E",
+        text: "Kanheri Caves, Sanjay Gandhi National Park",
+      },
+    },
+  });
+
+  const camExp = /^cam_[0-9]{4}$/;
+
+  if (!camExp.test(req.query.camId))
+    return res.status(409).json({ err: "Invalid cam ID" });
+
+  newCam
+    .save()
+    .then((doc) => {
+      res.json({ msg: "Device added successfully!" });
+    })
+    .catch((err) => {
+      console.log("Unable to add cam", err);
+
+      res.status(500).json({ err: "SERVER_INTERNL_ERROR" });
+    });
+});
+
+// const createUser = async function () {
+//   const salt = bcrypt.genSaltSync(10);
+//   const hash = bcrypt.hashSync("password", salt);
+
+//   const user = new User({
+//     email: "email@gmail.com",
+//     password: hash,
+//     phone: "1203049990",
+//     since: Date.now(),
+//   });
+
+//   await user.save();
+// };
+
+// createUser();
 module.exports = router;

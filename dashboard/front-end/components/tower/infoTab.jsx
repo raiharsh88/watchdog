@@ -66,11 +66,13 @@ const InfoTab = function (props) {
                 <i className="far fa-search"></i>
             </SearchBar>
 
+            <Head>
+                {Object.keys(infoTab.pairs).map((key) =>
+                    <InfoDiv
+                        key={key}><label>{key}</label><span>{infoTab.pairs[key].toUpperCase()}</span>
+                    </InfoDiv>)}
+            </Head>
 
-            {Object.keys(infoTab.pairs).map((key) =>
-                <InfoDiv
-                    key={key}><label>{key}</label><span>{infoTab.pairs[key]}</span>
-                </InfoDiv>)}
 
             <Map />
 

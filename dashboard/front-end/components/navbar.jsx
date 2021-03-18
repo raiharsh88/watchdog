@@ -22,9 +22,6 @@ const Navbar = function (props) {
                 <i className="fal fa-bell"></i>
                 <h1>Notifications</h1>
             </Option>
-
-
-
             <Option selected={props.option === 'archive'} onClick={() => props.setOption('archive')}>
                 <i className="far fa-inbox"></i>
                 <h1>Archives</h1>
@@ -43,9 +40,9 @@ const Navbar = function (props) {
                 <h1>Reports</h1>
             </Option>
 
-            <Bigbutton>
-                <span>Add Device</span>
-            </Bigbutton>
+            {(props.option == 'network') && <Bigbutton onClick={() => props.setOption('add_camera')}>
+                <span>Add Camera</span>
+            </Bigbutton>}
         </Menu>
     )
 }

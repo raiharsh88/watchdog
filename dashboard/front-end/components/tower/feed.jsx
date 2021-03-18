@@ -23,10 +23,11 @@ const Feed = function (props) {
 
         let data = await req.json();
 
-
+        data.data = data.data.reverse().splice(0, 30)
 
 
         setData(data);
+        setInfoTab(data.data[0])
 
 
 
@@ -49,9 +50,9 @@ const Feed = function (props) {
         const res = await req.json();
 
 
-        setTimeout(() => setInfoTab(res), 1000);
+        // setTimeout(() => setInfoTab(res), 100);
 
-
+        setInfoTab(res)
 
     }
 

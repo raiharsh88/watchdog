@@ -5,11 +5,12 @@ const Schema = mongoose.Schema;
 const camSchema = new Schema({
   camId: String,
   time: Number,
-  lastUpdate: Number,
+  lastSeen: Number,
+  email: String,
   meta: {
     location: {
-      lat: Number,
-      lon: Number,
+      lat: String,
+      lon: String,
       text: String,
     },
   },
