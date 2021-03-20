@@ -4,7 +4,12 @@ import InfoTab from '../../components/tower/infoTab';
 
 import { Column, Head, ImageCard, CardHead, InfoDiv } from '../../styled/tower/feedStyled';
 import Loader from '../../components/loader';
+
+
 const Feed = function (props) {
+
+
+
 
 
     const [meta, setMeta] = useState({
@@ -14,9 +19,26 @@ const Feed = function (props) {
     const [data, setData] = useState(null);
     const [infoTab, setInfoTab] = useState(null);
 
+
+
+
+
+    async function checkUpdates(imgId) {
+
+        const req = await fetch(`${url}/api/latest?imgId=${imgId}`, { credentials: 'include' });
+
+
+        if (req.status === 401) {
+            alert('Login');
+
+        }
+
+        // if (req.status === )
+
+    }
     useEffect(async () => {
 
-        const req = await fetch(url + '/api/sample', { credentials: 'include' });
+        const req = await fetch(url + '/api/load-dashboard', { credentials: 'include' });
 
         if (req.status !== 200) return alert('Something went wrong');
 
@@ -32,7 +54,12 @@ const Feed = function (props) {
 
 
 
+
     }, [])
+
+
+
+
 
 
     async function imageDetails(imgId) {
@@ -76,10 +103,13 @@ const Feed = function (props) {
                 <Column>
 
                     <Head>
+                        {/* <span style={{ color: 'red' }}>MADARCHOD CALL KAR DIMAAG MAT KHARAB KAR</span> */}
                         <span>{meta.head}</span>
+
+                        {/* {alert("BHOSDIWALE CALL KAR")} */}
                     </Head>
                     {data.data.map(image => <Card data={image}
-                        key={image.imgId} imageDetails={imageDetails} />)}
+                        key={image.imgId} imageDetails={imageDetails} infoTab={infoTab} />)}
                 </Column>
 
             </div>
@@ -124,7 +154,7 @@ const Card = function (props) {
 
 
 
-        <ImageCard onClick={() => props.imageDetails(image.imgId)}>
+        <ImageCard selected={image.imgId === (props.infoTab ? props.infoTab.imgId : 'xyz')} onClick={() => props.imageDetails(image.imgId)}>
             <CardHead>
 
                 <InfoDiv>

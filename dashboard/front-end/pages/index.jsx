@@ -1,6 +1,7 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/navbar';
+import io from 'socket.io-client';
 
 import Head from 'next/head';
 import { Container } from '../styled/order-info/mainStyled'
@@ -11,6 +12,10 @@ import Feed from '../components/tower/feed'
 import Cameras from '../components/tower/cameras'
 import InfoTab from '../components/tower/infoTab';
 import AddCamera from '../components/tower/addCamera'
+import Loader from '../components/loader';
+
+
+
 const HeadTag = function (props) {
 
     return (
@@ -47,6 +52,9 @@ export default function OrderInfo(props) {
 
     const [option, setOption] = useState('home')
     const [data, setData] = useState(null);
+    const [auth, setAuth] = useState(null);
+
+
 
     // const [current , setCurrent] = useEffect('feed');
 
@@ -57,6 +65,12 @@ export default function OrderInfo(props) {
         if (req.status === 403) {
             return router.replace('/login');
         }
+
+
+        setAuth(true);
+
+
+
 
 
 
@@ -99,7 +113,7 @@ export default function OrderInfo(props) {
             <HeadTag />
 
 
-            <div className="container-fluid">
+            {auth && (<div className="container-fluid">
 
                 <div className="row h-100 pr-5 pl-5" style={{ height: '100%' }}>
                     <div className="col col-2">
@@ -109,16 +123,19 @@ export default function OrderInfo(props) {
                         {option === 'home' ? <Feed option={option} />
                             : option === 'network' ? <Cameras option={option} />
                                 : option === 'add_camera' ? <AddCamera option={option} />
-                                    : <Feed option={option} />}
+                                    : <Feed option={option} auth={auth} />}
 
                     </div>
 
                 </div>
 
 
-            </div>
+            </div>)}
 
         </main>
     )
 
 }
+
+
+

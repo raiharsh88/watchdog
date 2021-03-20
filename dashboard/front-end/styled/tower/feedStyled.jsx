@@ -52,8 +52,7 @@ width:100%;
 border-bottom:0.1px solid rgb(47, 51, 54);
 border-left:none;
 border-right:none;
-
-
+/* height:350px; */
 display:flex;
 flex-direction:column;
 justify-content:flex-start;
@@ -64,9 +63,11 @@ padding:10px 32px 70px 32px;
 /* margin:20px 0px 20px 0px; */
 transition: background-color 0.1s linear;
 
+background-color:${props => props.selected ? 'rgba(15,15,15,0.5)' : 'transparent'};
+
 img{
-    max-width:80%;
-    height:auto;
+    max-width:100%;
+    max-height:100%;
     object-fit:contain;
     border-radius:7px;
 }

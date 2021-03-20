@@ -4,7 +4,10 @@ const user = {
   name: String,
   email: String,
   phone: String,
+  role: String,
+  subs: [String],
   password: String,
+  lastSeen: String,
   since: String,
 };
 

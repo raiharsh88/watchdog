@@ -22,6 +22,7 @@
     "nanoid": "^3.1.22",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "socket.io": "^4.0.0",
     "validator": "^13.5.2"
   }
 }

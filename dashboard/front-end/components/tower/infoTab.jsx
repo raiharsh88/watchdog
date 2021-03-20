@@ -12,7 +12,7 @@ const InfoTab = function (props) {
 
     useEffect(async () => {
 
-        console.log(props.data);
+        // console.log(props.data);
 
 
         setInfoTab(props.data);
@@ -43,6 +43,16 @@ const InfoTab = function (props) {
 
         }
 
+
+        // let confds = props.data.meta.confidence;
+        // for (let i = 0; i < confds.length; i++) {
+
+        //     pairs['Person ' + (i + 1)] = confds[i];
+        // }
+
+        // delete pairs.confidence;
+
+        // console.log(pairs);
 
         delete pairs.camId;
 

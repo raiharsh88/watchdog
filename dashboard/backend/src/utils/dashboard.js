@@ -5,6 +5,11 @@ const bcrypt = require("bcrypt");
 
 const router = require("express").Router();
 
+function checkAuth(req, res, next) {
+  if (!req.user) return res.status(401).json({ err: "UNAUTHORIZED" });
+
+  next();
+}
 //AIzaSyDdyrjGEE5b4hhoJou4d8l1R1CdXR3twDM
 const CreateSample = async function () {
   let data = {
@@ -120,6 +125,11 @@ router.get("/add-camera", async (req, res) => {
     });
 });
 
+router.get("/load-dashboard", checkAuth, async (req, res) => {
+  const { id, email } = req.user;
+
+  res.status(404).json({ msg: "Sample data" });
+});
 // const createUser = async function () {
 //   const salt = bcrypt.genSaltSync(10);
 //   const hash = bcrypt.hashSync("password", salt);
