@@ -19,7 +19,7 @@ const temporary = {
   otp: String,
 };
 
-const userSchema = new Schema(user);
+const userSchema = new Schema(user, { strict: false });
 const tempoprarySchema = new Schema(temporary);
 
 const User = mongoose.model("users", userSchema);

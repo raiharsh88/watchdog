@@ -1,11 +1,11 @@
 const express = require("express");
 const path = require("path");
 
-var bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const mongoStore = require("connect-mongo")(session);
 const passport = require("passport");
+const { User } = require("./schema/users");
 
 const app = express();
 
@@ -44,21 +44,8 @@ app.use(function (req, res, next) {
     "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
   );
 
-  // Pass to next layer of middleware
   next();
 });
-
-const server = require("http").createServer(app, {
-  cors: {
-    origin: "*",
-  },
-});
-// const io = require("socket.io")(server, {
-//   cors: {
-//     origin: "http://172.105.63.46:3000",
-//     methods: ["GET", "POST"],
-//   },
-// });
 
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -97,6 +84,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path_to_static));
 
+app.use("/", async (req, res, next) => {
+  if (req.user) {
+    await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { lastSeen: Date.now() }
+    );
+  }
+  next();
+});
 app.use("/auth", authRouter);
 
 app.use("/upload", uploadRouter);
@@ -106,22 +102,7 @@ app.use("/api", apiRouter);
 app.get("/test", async (req, res) => {
   res.json("Serve is online");
 });
-let i = 0;
 
-app.get("/", async (req, res) => {
-  res.json({ msg: "Server is online" });
-});
-
-// io.on("connection", (socket) => {
-//   console.log("Clinet connected", i++);
-//   io.emit("message", "hello");
-//   socket.on("message", (name, message) => {
-//     console.log("message is", name, i++);
-
-//     // io.emit("message", { name, message });
-//   });
-// });
-
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server running on ${port}`);
 });

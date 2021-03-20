@@ -7,6 +7,7 @@ const imageSchema = new Schema(
     camId: String,
     url: String,
     imgId: String,
+    email: String,
     meta: { Object },
   },
   { strict: false }

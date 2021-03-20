@@ -144,70 +144,8 @@ width:100%;
     }
 
 
-    input {
-
-width:30%;
-margin-bottom:1.4rem;
-padding:10px 14px ;
-border:1px solid ${props => props.error ? 'rgb(214,59,59)' : '#757575'};
-border-radius:18px;
-background-color:transparent;
-font-family:'Roboto';
-font-size:16px;
-color:white;
-text-align:center;
-font-weight:300;
-&::placeholder { 
-    color:#adacac;
-  opacity: 0.5;
-  font-weight:300;
-}
-&:focus{
-    outline:none;
-}
-
-
-
-    }
-
-
-
-`
-const Bigbutton = styled.div`
-
-/* background-color:#049fe0; */
-padding:7px 24px 7px 24px;
-
-width:max-content;
-margin-top:30px;
-text-align:center;
-
-border:1px solid #049fe0;
-border-radius:20px;
-background-color:#049fe0;
-
-span{
-    font-family:sans-serif;
-    font-weight:400;
-    color:white;
-    font-size:14px;
-    text-align:center;
-
-}
-&:hover{
-    /* background-color:#068ac2; */
-    cursor:pointer;
-     background-color:transparent;
-    transition: background-color 0.1s linear;
-
-span{
-    color:#049fe0;
-
-}
-   
-
     
-}
+
 `
 
 const Error = styled.small`
@@ -291,8 +229,215 @@ i{
 
 }
 `
+
+const FormTab = styled.div`
+
+
+width:100%;
+object-fit:cover;
+display:flex;
+flex-direction:row;
+flex-grow:1;
+justify-content:center;
+
+
+`
+
+
+const Form = styled.div`
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+height:auto;
+padding:30px;
+border-radius:7px;
+/* box-shadow: 0px 0px 5px -1px rgba(78,196,217,1); */
+/* background-color:#363636; */
+margin-top:6rem;
+/* border:0.1px solid rgb(47, 51, 54); */
+
+width:50%;
+
+
+
+i{
+    font-size:30px;
+    color:#c9c5c5;
+    margin-bottom:30px;
+}
+
+
+
+`
+const InputBox = styled.div`
+
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+align-items:flex-start;
+width:100%;
+margin:0 !important;
+
+input {
+
+width:100%;
+margin-bottom:1.4rem;
+padding:10px 14px ;
+border:1px solid ${props => props.error ? 'rgb(214,59,59)' : '#757575'};
+border-radius:18px;
+background-color:transparent;
+font-family:'Roboto';
+font-size:16px;
+color:white;
+text-align:center;
+font-weight:300;
+&::placeholder { 
+    color:#ebebeb;
+  opacity: 0.5;
+  font-weight:300;
+  font-size:13px;
+}
+&:focus{
+    outline:none;
+}
+}
+    
+`
+
+const Bigbutton = styled.div`
+
+/* background-color:#049fe0; */
+padding:7px 24px 7px 24px;
+
+width:max-content;
+margin-top:30px;
+text-align:center;
+width:max-content;
+border:1px solid #049fe0;
+border-radius:20px;
+background-color:#049fe0;
+max-width:50%;
+width:50%;
+span{
+    font-family:sans-serif;
+    font-weight:400;
+    color:white;
+    font-size:14px;
+    text-align:center;
+
+}
+&:hover{
+    /* background-color:#068ac2; */
+    cursor:pointer;
+     background-color:transparent;
+    transition: background-color 0.1s linear;
+
+
+    
+}
+`
+
+
+const Role = styled.div`
+       
+       display:flex;
+       flex-direction:row;
+       justify-content:flex-start;
+       align-items:center;
+       
+         
+         span{
+
+             font-family:'Noto Sans';
+             font-weight:200;
+             font-size:13px;
+             color:#adacac;
+             margin-right:10px;
+         }
+         input{
+              border-color:black;
+         }
+          
+
+`
+
+
+const EmployeeCard = styled.div`
+
+display:flex;
+flex-direction:row;
+justify-content:flex-start;
+width:100%;
+padding:10px ;
+background-color:#171717;
+border-radius:3px;
+margin-bottom:20px;
+box-shadow: 0px 0px 5px 2px rgba(5,5,5,1);
+
+
+
+`
+
+const Icon = styled.div`
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+height:100%;
+
+flex:0.3;
+i{
+    align-self:center;
+    font-size:30px;
+    color:#c9c5c5;
+    margin-bottom:0;
+    
+    }
+
+
+`
+const EmpployeeDetail = styled.div`
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding:0px 10px;
+flex:1;
+span{
+
+font-family:'Noto Sans';
+font-weight:700;
+font-size:15px;
+color:#d6d2d2;
+}
+
+p{
+font-family:'Noto Sans';
+font-weight:200;
+font-size:14px;
+color:#adacac;
+margin:0;
+}
+
+small{
+
+font-family:'Noto Sans';
+font-weight:200;
+font-size:11px;
+color:#adacac;
+margin-right:10px;
+
+}
+
+`
+
+
 export {
     Column, NoCams, Head, AddCam,
     Bigbutton, Success, Error, CamIcon,
-    CamWrapper, Status
+    CamWrapper, Status, Form, InputBox,
+    FormTab, Role, EmployeeCard, EmpployeeDetail,
+    Icon
 }

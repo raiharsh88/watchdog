@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { Image } = require("../schema/image");
+const { Cam } = require("../schema/cam");
 const { nanoid } = require("nanoid");
 const fs = require("fs");
 const path = require("path");
@@ -35,12 +36,24 @@ async function updateDB(req, res, next) {
     return rej("NO DATA FOUND WITH IMAGE");
   }
 
+  //Getting the owner of the cam
+
   const data = JSON.parse(JSON.stringify(req.body));
+
   const { camId } = data;
+
+  const camRecord = await Cam.findOneAndUpdate(
+    { camId },
+    { lastSeen: Date.now() }
+  );
+
+  const { email } = camRecord;
+
   console.log("Data is", data);
   const newImage = new Image({
     time: Date.now(),
     camId: data.camId,
+    email,
     imgId: camId + "_" + (await nanoid(10)),
     url: "http://172.105.63.46:5000/uploads/" + req.file.filename,
     meta: {

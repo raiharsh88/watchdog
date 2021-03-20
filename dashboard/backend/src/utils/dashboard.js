@@ -130,6 +130,21 @@ router.get("/load-dashboard", checkAuth, async (req, res) => {
 
   res.status(404).json({ msg: "Sample data" });
 });
+
+router.get("/load-employees", checkAuth, async (req, res) => {
+  const user = req.user;
+  let employees = [];
+
+  for await (let email of user.subs) {
+    let emp = await User.findOne({ email }, "email since lastSeen");
+
+    if (emp) employees.push(emp);
+
+    console.log("sddd");
+  }
+  console.log(employees);
+  res.json({ data: employees });
+});
 // const createUser = async function () {
 //   const salt = bcrypt.genSaltSync(10);
 //   const hash = bcrypt.hashSync("password", salt);

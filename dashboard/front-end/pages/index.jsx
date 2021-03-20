@@ -8,11 +8,10 @@ import { Container } from '../styled/order-info/mainStyled'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { url } from '../config';
-import Feed from '../components/tower/feed'
-import Cameras from '../components/tower/cameras'
-import InfoTab from '../components/tower/infoTab';
-import AddCamera from '../components/tower/addCamera'
-import Loader from '../components/loader';
+import Feed from '../components/tower/feed';
+import Cameras from '../components/tower/cameras';
+import AddCamera from '../components/tower/addCamera';
+import Access from '../components/tower/access';
 
 
 
@@ -122,8 +121,10 @@ export default function OrderInfo(props) {
                     <div className="col col-10 pl-5">
                         {option === 'home' ? <Feed option={option} />
                             : option === 'network' ? <Cameras option={option} />
-                                : option === 'add_camera' ? <AddCamera option={option} />
-                                    : <Feed option={option} auth={auth} />}
+                                : option === 'add_camera' ? <AddCamera option={option} /> : null}
+
+
+                        {(option === 'access') && <Access option={option} auth={auth} />}
 
                     </div>
 

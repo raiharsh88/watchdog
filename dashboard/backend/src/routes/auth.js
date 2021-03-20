@@ -3,6 +3,13 @@ const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const path = require("path");
+const validator = require("validator");
+const { User } = require("../schema/users");
+
+function checkAuth(req, res, next) {
+  if (!req.user) return res.status(401).json({ err: "UNAUTHORIZED" });
+  next();
+}
 
 router.post("/login", (req, res, next) => {
   // return res.json(null);
@@ -44,5 +51,51 @@ router.get("/check-auth", async (req, res) => {
   console.log("This user is authneticated");
 
   res.status(200).json({ msg: "AUTHENTICATED" });
+});
+
+router.post("/add-user", checkAuth, async (req, res) => {
+  const { email, password, role, password2 } = req.body;
+
+  console.log(req.body);
+
+  if (req.user.role !== "admin")
+    return res
+      .status(403)
+      .json({ msg: "You need admin privilege for this operation" });
+
+  if (!validator.isEmail(email))
+    return res.status(400).json({ err: "Invalid email!" });
+
+  const oldUser = await User.findOne({ email });
+
+  if (oldUser) return res.status(409).json({ msg: "User already exists!" });
+
+  const hash = bcrypt.hashSync(password, 10);
+  const newUser = new User({
+    email,
+    password: hash,
+    since: Date.now(),
+    role,
+    subs: [],
+    lastSeen: Date.now(),
+  });
+
+  let oldSubs = [...req.user.subs];
+
+  await User.findOneAndUpdate(
+    { email: req.user.email },
+    { subs: [...oldSubs, email] }
+  );
+
+  newUser
+    .save()
+    .then((user) => {
+      console.log(user);
+
+      res.json({ msg: "User addedd successfully" });
+    })
+    .catch((err) => {
+      res.status(500).json({ err: "SERVER_INTERNAL_ERROR" });
+    });
 });
 module.exports = router;

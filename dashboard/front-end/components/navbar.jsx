@@ -12,7 +12,9 @@ const Navbar = function (props) {
             <Option  >
                 <img src={url + '/meta/watchdog.png'} alt="logo" />
             </Option>
-
+            <Option onClick={() => props.setOption('home')}>
+                <h1>1010</h1>
+            </Option>
             <Option selected={props.option === 'home'} onClick={() => props.setOption('home')}>
                 <i className="fas fa-home-alt"></i>
                 <h1>Home</h1>

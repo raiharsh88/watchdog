@@ -38,7 +38,7 @@ const Feed = function (props) {
     }
     useEffect(async () => {
 
-        const req = await fetch(url + '/api/load-dashboard', { credentials: 'include' });
+        const req = await fetch(url + '/api/sample', { credentials: 'include' });
 
         if (req.status !== 200) return alert('Something went wrong');
 
