@@ -26,7 +26,7 @@ const HeadTag = function (props) {
 
     return (
         <Head>
-            <title>Login - Nebula Living</title>
+            <title>Login - Watchdog</title>
             <link rel="shortcut icon" href="/meta/title.png" type="image/png" />
             <link rel="preconnect" href="https://fonts.gstatic.com" />
             <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet" />

@@ -33,6 +33,9 @@ top:0;
 background-color:rgba(0,0,0,1) !important;
 opacity:1;
 z-index:100;
+display:flex;
+flex-direction:row;
+justify-content:space-between;
 span{
 
     color:white;
@@ -41,6 +44,21 @@ span{
     font-weight:600;
     text-transform :capitalize;
 }
+
+
+i{
+
+    padding:0px;
+    border-radius:20px;
+    font-size:25px;
+    color:rgb(4, 159, 224);
+
+    &:hover{
+        cursor:pointer;
+    }
+
+}
+
 
 `
 

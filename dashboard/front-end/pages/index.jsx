@@ -22,7 +22,7 @@ const HeadTag = function (props) {
         <Head>
 
 
-            <title>Tower - Watchdog</title>
+            <title>Tower - 1010</title>
 
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -108,10 +108,7 @@ export default function OrderInfo(props) {
     return (
 
         <main style={{ minHeight: '100vh', maxHeight: "100vh", backgroundColor: 'rgb(0,0,0)' }}>
-
             <HeadTag />
-
-
             {auth && (<div className="container-fluid">
 
                 <div className="row h-100 pr-5 pl-5" style={{ height: '100%' }}>
@@ -122,8 +119,6 @@ export default function OrderInfo(props) {
                         {option === 'home' ? <Feed option={option} />
                             : option === 'network' ? <Cameras option={option} />
                                 : option === 'add_camera' ? <AddCamera option={option} /> : null}
-
-
                         {(option === 'access') && <Access option={option} auth={auth} />}
 
                     </div>

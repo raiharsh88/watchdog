@@ -65,6 +65,18 @@ router.post("/add-user", checkAuth, async (req, res) => {
 
   if (!validator.isEmail(email))
     return res.status(400).json({ err: "Invalid email!" });
+  else if (!password)
+    return res.status(400).json({ err: "Password cannot be empty!" });
+  else if (!password2)
+    return res.status(400).json({ err: "Password cannot be empty!" });
+  else if (password.length < 8)
+    return res.status(400).json({ err: "Password too short!" });
+  else if (password.length > 16)
+    return res
+      .status(400)
+      .json({ err: "Password should be between 8 to 16 characters long" });
+  else if (password !== password2)
+    return res.status(400).json({ err: "Pasword did not match" });
 
   const oldUser = await User.findOne({ email });
 
@@ -76,11 +88,12 @@ router.post("/add-user", checkAuth, async (req, res) => {
     password: hash,
     since: Date.now(),
     role,
+    parent: req.user.email,
     subs: [],
     lastSeen: Date.now(),
   });
 
-  let oldSubs = [...req.user.subs];
+  let oldSubs = req.user.subs.filter((e) => e !== email);
 
   await User.findOneAndUpdate(
     { email: req.user.email },
@@ -93,6 +106,29 @@ router.post("/add-user", checkAuth, async (req, res) => {
       console.log(user);
 
       res.json({ msg: "User addedd successfully" });
+    })
+    .catch((err) => {
+      res.status(500).json({ err: "SERVER_INTERNAL_ERROR" });
+    });
+});
+
+router.get("/remove-user", async (req, res) => {
+  const delUser = req.query.email;
+
+  const checkExists = await User.findOne({ email: delUser });
+
+  if (!checkExists) return res.status(400).json({ err: "Invalid request!" });
+
+  if (req.user.role !== "admin")
+    return res.status(403).json({ err: "You are not authorized!" });
+
+  await User.findOneAndDelete({ email: delUser });
+
+  const subs = req.user.subs.filter((e) => e !== delUser);
+
+  User.findOneAndUpdate({ email: req.user.email }, { subs: subs })
+    .then((doc) => {
+      res.json({ msg: "User removed successfully!" });
     })
     .catch((err) => {
       res.status(500).json({ err: "SERVER_INTERNAL_ERROR" });

@@ -64,7 +64,7 @@ async function updateDB(req, res, next) {
   await newImage
     .save()
     .then((doc) => {
-      console.log("Image Saved", doc);
+      // console.log("Image Saved", doc);
 
       return res.json({
         success: true,
@@ -80,7 +80,7 @@ async function updateDB(req, res, next) {
 
 router.post("/", upload.single("file"), (req, res, next) => {
   if (!req.file) {
-    console.log("No file received", req.body);
+    // console.log("No file received", req.body);
     return res.send({
       success: false,
     });

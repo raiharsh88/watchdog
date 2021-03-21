@@ -67,7 +67,11 @@ router.get("/image-details", async (req, res) => {
 
 router.get("/list-cameras", async (req, res) => {
   if (!req.user) return res.status(401).json({ err: "UNAUTHORIZED" });
-  const cams = await Cam.find({ email: req.user.email });
+  var cams = null;
+
+  if (req.user.role == "admin") {
+    cams = await Cam.find({ email: req.user.email });
+  } else cams = await Cam.find({ email: req.user.parent });
 
   // for (let cam of cams) {
   //   let newUpdate = await Cam.findOneAndUpdate(
@@ -128,7 +132,36 @@ router.get("/add-camera", async (req, res) => {
 router.get("/load-dashboard", checkAuth, async (req, res) => {
   const { id, email } = req.user;
 
-  res.status(404).json({ msg: "Sample data" });
+  const limit = 100;
+  var images = await Image.find({ email: email })
+    .limit(limit)
+    .sort({ _id: -1 });
+
+  if (req.user.role !== "admin") {
+    images = await Image.find({ email: req.user.parent })
+      .sort({ _id: -1 })
+      .limit(limit);
+  }
+
+  res.json({ data: images });
+});
+
+var i = 1;
+
+router.get("/latest", async (req, res) => {
+  const imgId = req.query.imgId;
+  const image = (await Image.find({}).sort({ _id: -1 }).limit(1))[0];
+  console.log("ImgId", imgId, image);
+
+  if (image) {
+    if (image.imgId == imgId) {
+      return res.status(404).json({ err: "No updates" });
+    } else if (image.imgId !== imgId) {
+      res.status(200).json({ msg: "New updates available" });
+    }
+  }
+
+  // res.json({ data: images });
 });
 
 router.get("/load-employees", checkAuth, async (req, res) => {
@@ -139,10 +172,7 @@ router.get("/load-employees", checkAuth, async (req, res) => {
     let emp = await User.findOne({ email }, "email since lastSeen");
 
     if (emp) employees.push(emp);
-
-    console.log("sddd");
   }
-  console.log(employees);
   res.json({ data: employees });
 });
 // const createUser = async function () {
@@ -160,4 +190,5 @@ router.get("/load-employees", checkAuth, async (req, res) => {
 // };
 
 // createUser();
+
 module.exports = router;

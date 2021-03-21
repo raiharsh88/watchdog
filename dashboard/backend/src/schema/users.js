@@ -5,6 +5,7 @@ const user = {
   email: String,
   phone: String,
   role: String,
+  parent: String,
   subs: [String],
   password: String,
   lastSeen: String,

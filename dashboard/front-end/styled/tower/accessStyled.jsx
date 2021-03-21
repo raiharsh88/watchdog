@@ -265,6 +265,7 @@ i{
     font-size:30px;
     color:#c9c5c5;
     margin-bottom:30px;
+    
 }
 
 
@@ -433,11 +434,42 @@ margin-right:10px;
 
 `
 
+const DeleteButton = styled.div`
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+height:100%;
+flex:0.3;
+i{
+    align-self:center;
+    font-size:14px;
+    color:#c9c5c5;
+    margin-bottom:0;
+    
+    &:hover{
+        color:rgb(214,59,59);
+        transform:scale(1.01);
+        cursor:pointer;
+
+    }
+    }
+
+
+`
+
+
+const Refresh = styled.div`
+
+
+
+`
+
 
 export {
     Column, NoCams, Head, AddCam,
     Bigbutton, Success, Error, CamIcon,
     CamWrapper, Status, Form, InputBox,
     FormTab, Role, EmployeeCard, EmpployeeDetail,
-    Icon
+    Icon, DeleteButton
 }

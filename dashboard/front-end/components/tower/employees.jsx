@@ -7,7 +7,7 @@ import {
 } from '../../styled/tower/infoTabStyled';
 import { url } from '../../config'
 
-import { EmployeeCard, EmpployeeDetail, Icon } from '../../styled/tower/accessStyled';
+import { EmployeeCard, EmpployeeDetail, Icon, DeleteButton, Error, Success } from '../../styled/tower/accessStyled';
 
 
 const Employees = function (props) {
@@ -38,7 +38,7 @@ const Employees = function (props) {
 
 
 
-            {props.data.data.map((data) => <Card key={data.email} data={data} />)}
+            {props.data.data.map((data) => <Card key={data.email} data={data} loadEmployees={props.loadEmployees} />)}
 
         </Column>
 
@@ -51,7 +51,62 @@ const Employees = function (props) {
 const Card = function (props) {
 
 
+    const [error, setError] = useState(null);
 
+
+    const [success, setSuccess] = useState(null);
+
+    async function deleteUser() {
+
+
+        const email = props.data.email;
+        const req = await fetch(`${url}/auth/remove-user?email=${email}`, { credentials: 'include' });
+
+
+        if (req.status === 400) {
+
+
+            const res = await req.json();
+
+            alert(res.err);
+
+
+
+            return props.loadEmployees()
+        }
+        else if (req.status === 403) {
+
+            const res = await req.json();
+
+            alert(res.err);
+
+
+
+            return props.loadEmployees()
+
+        }
+        else if (req.status === 500) {
+
+            const res = await req.json();
+
+            alert(res.err);
+
+            return props.loadEmployees()
+
+        }
+        else if (req.status === 200) {
+
+            const res = await req.json();
+
+            alert(res.msg);
+
+            return props.loadEmployees()
+
+        }
+
+
+
+    }
     // if (!props.data) return null
     return (
 
@@ -68,8 +123,13 @@ const Card = function (props) {
                 <span>{props.data.email.slice(0, props.data.email.indexOf('@'))}</span>
 
                 <p>{props.data.email}</p>
-                <small>Last seen {new Date(parseInt(props.data.since)).toLocaleTimeString()}</small>
+                <small>Last seen {new Date(parseInt(props.data.since)).toLocaleString()}</small>
             </EmpployeeDetail>
+            <DeleteButton >
+
+                <i onClick={deleteUser} className="fas fa-trash"></i>
+
+            </DeleteButton>
         </EmployeeCard>
 
 

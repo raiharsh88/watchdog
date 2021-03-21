@@ -82,12 +82,9 @@ const Access = function (props) {
             return setError("You should be authenticated");
         }
 
-
         else if (req.status === 401) {
             // alert('Your are not logged in');
-
             return setError("You are unauthenticated!");
-
         }
 
         else if (req.status === 409) {
@@ -95,21 +92,15 @@ const Access = function (props) {
             // alert('User already exists');
 
             return setError("User already exists!");
+        }
+        else if (req.status === 400) {
+            const res = await req.json();
+            return setError(res.err);
 
         }
 
-
-
-        const res = await req.json();
-
         setSuccess("User addedd successfully!");
         loadEmployees();
-
-
-
-
-
-
 
     }
 
@@ -208,7 +199,7 @@ const Access = function (props) {
 
             <div className="col col-4">
 
-                <Employees data={employees} />
+                <Employees data={employees} loadEmployees={loadEmployees} />
             </div>
         </div>
     )
