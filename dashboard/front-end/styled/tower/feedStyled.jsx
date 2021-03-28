@@ -15,6 +15,15 @@ border-top:none;
 position:relative;
 padding:0;
 
+
+&::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
 /* justify-content:center; */
 
 /* padding:0px 32px 0px 32px; */

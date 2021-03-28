@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { url } from '../../config'
 import InfoTab from '../../components/tower/infoTab';
-
+import { useRouter } from 'next/router'
 import { Column, Head, ImageCard, CardHead, InfoDiv } from '../../styled/tower/feedStyled';
 import { Bigbutton } from '../../styled/navbarStyled';
 import Loader from '../../components/loader';
@@ -10,6 +10,7 @@ import Loader from '../../components/loader';
 const Feed = function (props) {
 
 
+    const router = useRouter();
 
 
 
@@ -17,7 +18,7 @@ const Feed = function (props) {
         head: props.option
     })
 
-    const [update, setUpdate] = useState(null);
+    const [refresh, setUpdate] = useState(false);
     const [data, setData] = useState(null);
     const [infoTab, setInfoTab] = useState(null);
 
@@ -28,46 +29,48 @@ const Feed = function (props) {
     async function checkUpdates() {
 
         if (!data) return
-        if (!data.data) return;
+        // if (!data.data) return;
         if (data.data.length < 1) return;
-        const imgId = data.data[0].imgId;
+        const idxx = data.data[0].imgId;
 
-
-        const req = await fetch(`${url}/api/latest?imgId=${imgId}`, { credentials: 'include' });
-
-
-        if (req.status === 401) {
+        const req = await fetch(`${url}/api/latest?imgId=${idxx}`, { credentials: 'include' });
+        if (req.status === 404) {
             // alert('Login');
-            setUpdate(null);
+            setUpdate(false);
+            console.log('No Updates available', false);
+
 
         } else if (req.status === 200) {
             setUpdate(true);
+            console.log('Updates available', true);
         }
-        // if (req.status === )
+
+
     }
 
 
     async function loadDashBoard() {
 
-
         setData(null);
         setInfoTab(null);
+        setInterval(() => {
+            checkUpdates()
+        }, 5000)
 
         const req = await fetch(url + '/api/load-dashboard', { credentials: 'include' });
 
-        setUpdate(null);
 
         if (req.status !== 200) return alert('Something went wrong');
 
-
-
         let data = await req.json();
 
-        data.data = data.data;
+        // data.data = data.data;
+
 
 
         setData(data);
         setInfoTab(data.data[0])
+        setUpdate(false);
 
 
 
@@ -80,15 +83,9 @@ const Feed = function (props) {
     }, [])
 
 
-    useEffect(() => {
+    useEffect(async () => {
 
 
-        setInterval(() => {
-
-            console.log('Checking updates')
-
-            checkUpdates()
-        }, 3000);
 
     }, [])
 
@@ -140,7 +137,7 @@ const Feed = function (props) {
                     <Head>
                         <span>{meta.head}</span>
 
-                        {update && (<i className="far fa-sync-alt" onClick={loadDashBoard}></i>)}
+                        {(refresh) && <i className="far fa-sync-alt" onClick={() => router.reload()}></i>}
 
                     </Head>
                     {data.data.map(image => <Card data={image}
@@ -172,13 +169,7 @@ const Card = function (props) {
 
 
     useEffect(() => {
-
-
-
-
         setImage(props.data);
-
-
 
     }, [])
 

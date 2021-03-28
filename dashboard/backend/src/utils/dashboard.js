@@ -132,7 +132,7 @@ router.get("/add-camera", async (req, res) => {
 router.get("/load-dashboard", checkAuth, async (req, res) => {
   const { id, email } = req.user;
 
-  const limit = 100;
+  const limit = 30;
   var images = await Image.find({ email: email })
     .limit(limit)
     .sort({ _id: -1 });
@@ -150,8 +150,9 @@ var i = 1;
 
 router.get("/latest", async (req, res) => {
   const imgId = req.query.imgId;
+  console.log(req.query);
   const image = (await Image.find({}).sort({ _id: -1 }).limit(1))[0];
-  console.log("ImgId", imgId, image);
+  // console.log("ImgId", imgId, image.imgId);
 
   if (image) {
     if (image.imgId == imgId) {

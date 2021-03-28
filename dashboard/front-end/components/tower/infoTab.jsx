@@ -77,6 +77,9 @@ const InfoTab = function (props) {
             </SearchBar>
 
             <Head>
+                <InfoDiv>
+                    <label>ID</label>   <span> {infoTab.imgId}</span>
+                </InfoDiv>
                 {Object.keys(infoTab.pairs).map((key) =>
                     <InfoDiv
                         key={key}><label>{key}</label><span>{infoTab.pairs[key].toUpperCase()}</span>
