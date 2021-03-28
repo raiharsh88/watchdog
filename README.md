@@ -8,6 +8,8 @@ When a person is detected in the frame of a video stream, that frame is forwarde
 
 These images can then be viewed on the dashboard after which the necessary steps to prevent poaching can be taken. 
 
+There is no live streaming camera on the platform as of now. This is because the platform has been designed for the cmaeras which operate under strict constraints when it comes to saving power. So It is not practically possible to stream live videos and last for years just on batteries. 
+
 
 
 ![Login](./readme/login.png?raw=true "Login")
