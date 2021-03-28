@@ -1,4 +1,4 @@
 module.exports = {
-  mongoURI: "mongodb://harsh:password@localhost:27017/wd",
+  mongoURI: "mongodb://<id>:<pass>@localhost:27017/wd",
   sgKey: "",
 };
