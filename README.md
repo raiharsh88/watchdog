@@ -15,12 +15,12 @@ These images can then be viewed on the dashboard after which the necessary steps
 
 ![Dashboard](./readme/dashboard.png?raw=true "Dashboard")
 
-![Network Manager](./network.png?raw=true "Network Manager")
+![Network Manager](./readme/network.png?raw=true "Network Manager")
 
-![Add Camera](./addCamera.png?raw=true "Add Camera")
+![Add Camera](./readme/addCamera.png?raw=true "Add Camera")
 
 
-![Access](./accessControl.png?raw=true "Access")
+![Access](./readme/accessControl.png?raw=true "Access")
 
  
 
