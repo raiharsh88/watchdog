@@ -8,64 +8,52 @@ When a person is detected in the frame of a video stream, that frame is forwarde
 
 These images can then be viewed on the dashboard after which the necessary steps to prevent poaching can be taken. 
 
-The Front End of the dashboard has been built using HTML , ![CSS] ,JS , ReactJS , Styled Components. NextJS has also been used for providing server side rendering and simplifying the routing process.
-
-Signup does not requires any Otp verification as the app is just a test project.
-
-![Register](./register.png?raw=true "Register")
 
 
-Once signed up login using the credentials [Login](http://project-x-crm.herokuapp.com/register).
-
-![Login](./login.png?raw=true "Login")
+![Login](./readme/login.png?raw=true "Login")
 
 
 You can start adding the Medicines and reminders right away from your dashboard. 
 
-![Dashboard](./Dashboard.png?raw=true "Dashboard")
+![Dashboard](./readme/dashboard.png?raw=true "Dashboard")
 
 Once you click Add New Reminder button you can see all the input you need to fill to add a reminder.
 
 ![Form Input](./AddNewReminder.png?raw=true "Form Input")
 
-
-
-## Feel free to give any feedback and suggestions :),
-
-I have  diabled notifications due to API's costs.
-
-# Modes of reminders (disabled for now)
-
-1.WhatsApp
-
-2.SMS
-
-3.Email 
+ 
 
 # Frontend tech stack 
  
-HTML5 
+HTML 
 
-CSS3
+CSS 
 
-Bootstrap
+JS 
 
-JavaScript
+ReactJS 
 
-JQuery
+Styled Components
 
 # Backend tech stack 
 
 NodeJS 
 
+NEXT JS
+
+
+Express
+
+Passport JS
+
 ## Database
-Mongo DB Atlas
+
+MongoDB
 
 ## Hosting 
 
-Heroku
+Linode VPS
 
-Feel free to use every piece of code here.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
