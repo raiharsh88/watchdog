@@ -14,7 +14,7 @@ with open('coco.names', 'r') as f:
 
 cap = cv2.VideoCapture('impractical.mp4')
 
-file_url = 'http://172.105.63.46:5000/upload'
+file_url = 'http://localhost:5000/upload'
 
 
 while True:
